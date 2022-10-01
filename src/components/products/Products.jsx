@@ -1,6 +1,18 @@
-import React from 'react'
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCartData } from "../../store/cart-actions";
+import Product from "../product/Product";
 
-function Products({cartItems}) {
+function Products() {
+
+  const dispatch = useDispatch();
+  const {itemsList} = useSelector((store) => store.cart);
+
+  useEffect(() => {
+    dispatch(fetchCartData());
+  }, [dispatch]);
+
+
   return (
     <div>
         <div className="bg-white">
@@ -8,28 +20,7 @@ function Products({cartItems}) {
         <h2 className="text-2xl font-bold tracking-tight text-gray-900">Customers also purchased</h2>
 
         <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-          {cartItems.map((product) => (
-            <div key={product.id} className="group relative">
-              <div className="min-h-80 aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:aspect-none lg:h-80">
-                <img
-                  src={product.images[0]} alt={product.title}
-                  className="h-full w-full object-cover object-center lg:h-full lg:w-full"
-                />
-              </div>
-              <div className="mt-4 flex justify-between">
-                <div>
-                  <h3 className="text-sm text-gray-700">
-                    <a >
-                      <span aria-hidden="true" className="absolute inset-0" />
-                      {product.title}
-                    </a>
-                  </h3>
-                </div>
-                <p className="text-sm font-medium text-gray-900">${product.price}</p>
-                
-              </div>
-            </div>
-          ))}
+          {itemsList.map((product) => <Product key={product.id} {...product} />)}
         </div>
       </div>
     </div>

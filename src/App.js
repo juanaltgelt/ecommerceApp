@@ -1,26 +1,29 @@
 import "./App.css";
 import Products from "./components/products/Products";
-import Navbar from "./components/navbar/Navbar";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchData } from "./store/cart-actions";
+import NotFound from "./components/notFound/NotFound";
+import Login from "./components/Login/Login";
+import { Route, Routes } from "react-router-dom";
+import ProtectedRoutes from "./components/protectedRoutes/ProtectedRoutes";
 
 function App() {
-  const dispatch = useDispatch();
-  const cartItems = useSelector((state) => state.cart.itemsList);
-
-  useEffect(() => {
-    dispatch(fetchData());
-  }, [dispatch]);
+  
+  
 
   return (
     <div>
-      <header>
-        <nav>
-          <Navbar />
-        </nav>
-      </header>
-      {cartItems ? <Products cartItems={cartItems} /> : <h1>Loading...</h1>}
+      <Routes>
+        <Route exact path="/" element={<Login />} />
+
+      
+          <Route element={<ProtectedRoutes />}>
+            <Route path="/home" element={<Products />} />
+          </Route>
+    
+          
+
+          <Route exact path="*" element={<NotFound />} />
+        
+      </Routes>
     </div>
   );
 }
