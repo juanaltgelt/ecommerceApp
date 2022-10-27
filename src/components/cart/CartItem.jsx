@@ -1,6 +1,16 @@
-function CartItem({title}) {
+// import { useDispatch } from "react-redux";
+// import { increase } from "../../store/cart-slice";
+
+function CartItem({ title, quantity}) {
+  // const dispatch = useDispatch()
   return (
-    <div>{title}</div>
+    <li>
+      <p>{title} \\ Quantity: {quantity}.</p>
+      {/* <button
+        onClick={dispatch(increase(id))}>
+        increase
+      </button> */}
+    </li>
   )
 }
 

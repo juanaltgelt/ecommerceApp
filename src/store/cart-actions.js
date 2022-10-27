@@ -8,9 +8,6 @@ export const fetchCartData = createAsyncThunk(
       try {
         const response = await axios.get(url);
         const cartData = response.data.products;
-        cartData.forEach(function (element) {
-            element.quantity = 0;
-          });
         return cartData
       } catch (error) {
         console.log(error);

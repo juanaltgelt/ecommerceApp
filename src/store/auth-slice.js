@@ -3,7 +3,7 @@ import { getUserData } from "./auth-actions";
 
 const initialState = {
   userData: [],
-  isLoggedIn: false,
+  isLoggedIn: true,
 };
 
 const authSlice = createSlice({

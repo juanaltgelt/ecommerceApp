@@ -8,6 +8,7 @@ function Products() {
   const dispatch = useDispatch();
   const {itemsList} = useSelector((store) => store.cart);
 
+  console.log(itemsList)   
 
   useEffect(() => {
     dispatch(fetchCartData());

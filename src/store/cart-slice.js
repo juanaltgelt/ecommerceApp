@@ -5,7 +5,6 @@ import { fetchCartData } from "./cart-actions";
 const initialState = {
   itemsList: [],
   cartItems: [],
-  amount: 0,
   total: 0,
   isLoading: true,
 };
@@ -16,13 +15,20 @@ const cartSlice = createSlice({
   reducers: {
     clearCart: (state) => {
       state.cartItems = [];
-      state.amount = 0;
       state.total = 0;
     },
-    increase: (state, { payload }) => {
-      const cartItem = {...payload, quantity: 1}
-      console.log(cartItem);
+    addToCart: (state, action) => {
+      const itemInCart = state.cartItems.find((item) => item.id === action.payload.id);
+      if (itemInCart) {
+        itemInCart.quantity++;
+      } else {
+        state.cartItems.push({ ...action.payload, quantity: 1 });
+      }
     },
+    // increase: (state, action) => {
+    //   const item = state.cartItems.find((item) => item.id === action.payload.id);
+    //   item.quantity++;
+    // },
   },
   extraReducers: {
     [fetchCartData.pending]: (state) => {
@@ -38,6 +44,6 @@ const cartSlice = createSlice({
   },
 });
 
-export const { clearCart, increase } = cartSlice.actions;
+export const { clearCart, addToCart, increase } = cartSlice.actions;
 
 export default cartSlice;

@@ -11,7 +11,6 @@ export default function Cart() {
   const { isOpen } = useSelector((store) => store.modal);
   const {cartItems, total} = useSelector((store) => store.cart);
 
-
   return (
     <Transition.Root show={isOpen} as={Fragment}>
       <Dialog
@@ -70,12 +69,13 @@ export default function Cart() {
                       </Dialog.Title>
                     </div>
                     <div className="relative mt-6 flex-1 px-4 sm:px-6 ">
+                      <ul>
                         {
                             cartItems.map((product, index)=>{
                                 return <CartItem key={index} {...product} />
                             })
                         }
-
+                        </ul>
                         <h3>Total: ${total}</h3>
                    <button className="pointer-events-auto" onClick={()=> dispatch(clearCart())}>Clear Items</button>
                       {/* Replace with your content */}
