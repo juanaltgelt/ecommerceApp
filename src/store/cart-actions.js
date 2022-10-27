@@ -3,14 +3,19 @@ import axios from "axios";
 const url = "https://dummyjson.com/products"
 
 export const fetchCartData = createAsyncThunk(
-  "cart/fetchCartData ",
-  async () => {
-    try {
-      const response = await axios.get(url);
-      const cartData = response.data.products;
-      return cartData
-    } catch (error) {
-      console.log(error);
+    "cart/fetchCartData ",
+    async () => {
+      try {
+        const response = await axios.get(url);
+        const cartData = response.data.products;
+        cartData.forEach(function (element) {
+            element.quantity = 0;
+          });
+        return cartData
+      } catch (error) {
+        console.log(error);
+      }
     }
-  }
-);
+  );
+  
+

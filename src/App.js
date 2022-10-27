@@ -6,23 +6,16 @@ import { Route, Routes } from "react-router-dom";
 import ProtectedRoutes from "./components/protectedRoutes/ProtectedRoutes";
 
 function App() {
-  
-  
-
   return (
     <div>
       <Routes>
         <Route exact path="/" element={<Login />} />
 
-      
-          <Route element={<ProtectedRoutes />}>
-            <Route path="/home" element={<Products />} />
-          </Route>
-    
-          
+        <Route element={<ProtectedRoutes />}>
+          <Route path="/home" element={<Products />} />
+        </Route>
 
-          <Route exact path="*" element={<NotFound />} />
-        
+        <Route exact path="*" element={<NotFound />} />
       </Routes>
     </div>
   );

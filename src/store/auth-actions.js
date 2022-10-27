@@ -4,7 +4,7 @@ const url = "https://dummyjson.com/auth/login";
 
 export const getUserData = createAsyncThunk(
   "auth/getUserData",
-  async ({username, password}) => {
+  async ({username, password}, thunkAPI) => {
     try {
       const response = await axios.post(url, {
         username,
@@ -12,7 +12,7 @@ export const getUserData = createAsyncThunk(
       });
       return response.data;
     } catch (error) {
-      console.log(error);
+      return thunkAPI.rejectWithValue('something went wrong');
     }
   }
 );

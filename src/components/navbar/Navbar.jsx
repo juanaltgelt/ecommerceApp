@@ -1,10 +1,12 @@
 /* This example requires Tailwind CSS v2.0+ */
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { Bars3Icon,  XMarkIcon } from '@heroicons/react/24/outline'
 import { useSelector, useDispatch } from 'react-redux'
 import {signout} from "../../store/auth-slice"
 import { Link } from 'react-router-dom'
+import { openModal } from "../../store/modalSlice";
+import Cart from '../cart/Cart'
 
 const navigation = [
   { name: 'Products', href: '#', current: true },
@@ -20,10 +22,12 @@ function classNames(...classes) {
 export default function Navbar() {
   const dispatch = useDispatch()
   const {userData} = useSelector((store) => store.auth);
+  const {amount} = useSelector((store)=> store.cart)
+
 
 
   return (
-    <Disclosure as="nav" className="bg-gray-800 sticky top-0 z-50 bg-opacity-95">
+    <Disclosure as="nav" className="bg-gray-800 top-0 z-50 bg-opacity-95">
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -71,14 +75,8 @@ export default function Navbar() {
                 </div>
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                <button
-                  type="button"
-                  className="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                >
-                  <span className="sr-only">View notifications</span>
-                  <BellIcon className="h-6 w-6" aria-hidden="true" />
-                </button>
-
+                <h1 onClick={() => dispatch(openModal())} className='text-white'>Items: {amount}</h1>
+                    <Cart />
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative ml-3">
                   <div>

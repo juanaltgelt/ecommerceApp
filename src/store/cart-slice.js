@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+
 import { fetchCartData } from "./cart-actions";
 
 const initialState = {
@@ -12,21 +13,31 @@ const initialState = {
 const cartSlice = createSlice({
   name: "cart",
   initialState,
-  reducers: {},
+  reducers: {
+    clearCart: (state) => {
+      state.cartItems = [];
+      state.amount = 0;
+      state.total = 0;
+    },
+    increase: (state, { payload }) => {
+      const cartItem = {...payload, quantity: 1}
+      console.log(cartItem);
+    },
+  },
   extraReducers: {
     [fetchCartData.pending]: (state) => {
       state.isLoading = true;
     },
     [fetchCartData.fulfilled]: (state, action) => {
-        state.isLoading = false;
-        state.itemsList = action.payload
-      },
-      [fetchCartData.rejected]: (state) => {
-        state.isLoading = false;
-      },
+      state.isLoading = false;
+      state.itemsList = action.payload;
+    },
+    [fetchCartData.rejected]: (state) => {
+      state.isLoading = false;
+    },
   },
 });
 
-export const cartActions = cartSlice.actions;
+export const { clearCart, increase } = cartSlice.actions;
 
 export default cartSlice;

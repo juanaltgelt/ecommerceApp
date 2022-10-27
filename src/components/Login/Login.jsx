@@ -1,13 +1,12 @@
 import { LockClosedIcon } from "@heroicons/react/20/solid";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {getUserData} from "../../store/auth-actions"
 import { useState } from "react";
 
 function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate()
-  const {userData, isLoggedIn} = useSelector((store) => store.auth);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
