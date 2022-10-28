@@ -1,14 +1,18 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCartData } from "../../store/cart-actions";
+import { calculateTotals } from "../../store/cart-slice";
 import Product from "../product/Product";
 
 function Products() {
 
   const dispatch = useDispatch();
-  const {itemsList} = useSelector((store) => store.cart);
+  const {itemsList, cartItems} = useSelector((store) => store.cart);
 
-  console.log(itemsList)   
+  useEffect(() => {
+    dispatch(calculateTotals());
+  }, [cartItems]);
+
 
   useEffect(() => {
     dispatch(fetchCartData());
