@@ -3,22 +3,19 @@ import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { closeModal } from "../../store/modalSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { clearCart } from "../../store/cart-slice";
+import DeleteModal from "../modal/DeleteModal";
+
+import { openModal } from "../../store/modalSlice";
 import CartItem from "./CartItem";
 
 export default function Cart() {
   const dispatch = useDispatch();
-  const { isOpen } = useSelector((store) => store.modal);
-  const {cartItems, total} = useSelector((store) => store.cart);
-
-  
+  const { cartIsOpen } = useSelector((store) => store.modal);
+  const { cartItems, total, amount } = useSelector((store) => store.cart);
 
   return (
-    <Transition.Root show={isOpen} as={Fragment}>
-      <Dialog
-        as="div"
-        onClose={() => dispatch(closeModal())}
-      >
+    <Transition.Root show={cartIsOpen} as={Fragment}>
+      <Dialog as="div" onClose={() => dispatch(closeModal("cart"))}>
         <Transition.Child
           as={Fragment}
           enter="ease-in-out duration-500"
@@ -57,7 +54,7 @@ export default function Cart() {
                       <button
                         type="button"
                         className="rounded-md text-gray-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-white"
-                        onClick={() => dispatch(closeModal())}
+                        onClick={() => dispatch(closeModal("cart"))}
                       >
                         <span className="sr-only">Close panel</span>
                         <XMarkIcon className="h-6 w-6" aria-hidden="true" />
@@ -72,20 +69,34 @@ export default function Cart() {
                     </div>
                     <div className="relative mt-6 flex-1 px-4 sm:px-6 ">
                       <ul>
-          
-                        { 
-                            cartItems.map((product, index)=>{
-                                return <CartItem key={index} {...product} />
-                            })
-                            
-                        }
-                        </ul>
-                        <h2>Order Summary:</h2>
-                        <h3>Total: ${total}</h3>
-                   <button className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded" onClick={()=> dispatch(clearCart())}>Clear Items</button>
+                        {cartItems.map((product, index) => {
+                          return <CartItem key={index} {...product} />;
+                        })}
+                      </ul>
+                      {amount > 0 ? (
+                        <>
+                          <h2>Order Summary:</h2>
+                          <h3>
+                            total ({amount} items):{" "}
+                            <span className="font-semibold font-mono">
+                              ${total}
+                            </span>
+                          </h3>
+
+                          <button
+                            className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
+                            onClick={() => dispatch(openModal("modal"))}
+                          >
+                            Clear Items
+                          </button>
+                        </>
+                      ) : (
+                        <h1>Your shopping cart is empty!</h1>
+                      )}
+
+                      <DeleteModal />
                       {/* Replace with your content */}
-                   
-                      
+
                       {/* /End replace */}
                     </div>
                   </div>

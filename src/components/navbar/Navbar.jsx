@@ -76,7 +76,7 @@ export default function Navbar() {
                 </div>
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                <h1 onClick={() => dispatch(openModal())} className='text-white cursor-pointer'>Items: {amount} </h1>
+                <h1 onClick={() => dispatch(openModal("cart"))} className='text-white cursor-pointer'>Items: {amount} </h1>
                     <Cart />
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative ml-3">

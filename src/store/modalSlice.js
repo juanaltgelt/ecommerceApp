@@ -1,22 +1,33 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    isOpen: false
-}
+  cartIsOpen: false,
+  deleteModalIsOpen: false,
+};
 
 const modalSlice = createSlice({
-    name: "modal",
-    initialState,
-    reducers: {
-        openModal: (state) => {
-            state.isOpen = true;
-        },
-        closeModal: (state) => {
-            state.isOpen = false;
-        }
-    }
+  name: "modal",
+  initialState,
+  reducers: {
+    openModal: (state, action) => {
+        
+      if (action.payload === "cart") {
+        state.cartIsOpen = true;
+      } else {
+        console.log(action.payload);
+        state.deleteModalIsOpen = true;
+      }
+    },
+    closeModal: (state, action) => {
+        if (action.payload === "cart") {
+            state.cartIsOpen = false;
+          } else {
+            state.deleteModalIsOpen = false;
+          }
+    },
+  },
 });
 
-export const {openModal, closeModal} = modalSlice.actions;
+export const { openModal, closeModal } = modalSlice.actions;
 
 export default modalSlice;
